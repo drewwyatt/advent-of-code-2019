@@ -23,5 +23,5 @@
  * What is the sum of the fuel requirements for all of the modules on your spacecraft?
  */
 
-const solution = (mass: number) => mass
+const solution = (mass: number) => Math.floor(mass / 3) - 2
 export default solution
