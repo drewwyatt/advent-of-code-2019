@@ -5,6 +5,7 @@
   "license": "MIT",
   "author": "Drew Wyatt, <drew.j.wyatt@gmail.com>",
   "scripts": {
+    "dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/answers.ts",
     "test": "jest"
   },
   "dependencies": {

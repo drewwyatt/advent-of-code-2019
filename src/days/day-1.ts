@@ -22,6 +22,15 @@
  *
  * What is the sum of the fuel requirements for all of the modules on your spacecraft?
  */
+import getInputs from '../utils/get-inputs'
+const add = (a: number, b: number) => a + b
 
-const solution = (mass: number) => Math.floor(mass / 3) - 2
+export const calculateRequiredFuel = (mass: number) => Math.floor(mass / 3) - 2
+
+const solution = async () => {
+  const inputs = await getInputs('day-1.inputs.txt')
+  // console.log(inputs)
+  return inputs.map(calculateRequiredFuel).reduce(add)
+}
+
 export default solution
