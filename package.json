@@ -1,0 +1,22 @@
+{
+  "name": "advent-of-code-2019",
+  "description": "Advent of Code 2019",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Drew Wyatt, <drew.j.wyatt@gmail.com>",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "typescript": "^3.7.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.14",
+    "jest": "^24.9.0",
+    "nodemon": "^2.0.1",
+    "prettier": "^1.19.1",
+    "ts-jest": "^24.2.0",
+    "ts-node": "^8.5.4"
+  }
+}
