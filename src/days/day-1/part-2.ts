@@ -14,7 +14,9 @@
  * What is the sum of the fuel requirements for all of the modules on your spacecraft when also taking into account the mass of the added fuel? (Calculate the fuel requirements for each module separately, then add them all up at the end.)
  */
 
+import getInputs from '../../utils/get-inputs'
 import { calculateRequiredFuel } from './part-1'
+const add = (a: number, b: number) => a + b
 
 export const calculateRequiredFuelConsideringFuel = (mass: number) => {
   let fuel = calculateRequiredFuel(mass)
@@ -27,3 +29,10 @@ export const calculateRequiredFuelConsideringFuel = (mass: number) => {
   }
   return fuel
 }
+
+const solution = async () => {
+  const inputs = await getInputs('day-1/inputs.txt')
+  return inputs.map(calculateRequiredFuelConsideringFuel).reduce(add)
+}
+
+export default solution
