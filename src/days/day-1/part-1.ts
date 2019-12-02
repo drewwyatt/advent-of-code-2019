@@ -24,12 +24,13 @@
  */
 
 import getInputs from '../../utils/get-inputs'
+import { toParsedInputs } from './util'
 const add = (a: number, b: number) => a + b
 
 export const calculateRequiredFuel = (mass: number) => Math.floor(mass / 3) - 2
 
 const solution = async () => {
-  const inputs = await getInputs('day-1/inputs.txt')
+  const inputs = await getInputs('day-1/inputs.txt', toParsedInputs)
   return inputs.map(calculateRequiredFuel).reduce(add)
 }
 

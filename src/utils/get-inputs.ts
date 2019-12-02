@@ -4,12 +4,7 @@ import * as util from 'util'
 
 const readFile = util.promisify(fs.readFile)
 
-const getInputs = async (inputFile: string) => {
-  const rawInputs = await readFile(path.join(__dirname, '../days', inputFile), 'utf8')
-  return rawInputs
-    .split('\n')
-    .map(i => Number.parseInt(i.trim()))
-    .filter(Number.isInteger)
-}
+const getInputs = async <T>(inputFile: string, transform: (str: string) => T) =>
+  transform(await readFile(path.join(__dirname, '../days', inputFile), 'utf8'))
 
 export default getInputs
