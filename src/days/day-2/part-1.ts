@@ -67,13 +67,55 @@ export enum Position {
   Halt,
 }
 
+const toInstruction = (code: number): OpCode => {
+  if ([1, 2, 99].includes(code)) {
+    return code as OpCode
+  }
+
+  throw Error(`OpCode "${code}" is not an instruction`)
+}
+
+const apply = (op: OpCode, a: number, b: number) => (op === OpCode.Add ? a + b : a * b)
+
+const cycle = (position: Position) => {
+  switch (position) {
+    case Position.Instruction:
+      return Position.One
+    case Position.One:
+      return Position.Two
+    case Position.Two:
+      return Position.Three
+    case Position.Three:
+      return Position.Instruction
+    case Position.Halt:
+      return Position.Halt
+  }
+
+  throw Error(`Position "${position}" should not be cycled`)
+}
+
 export const intCode = (instructions: number[]) => {
   let op = OpCode.None
+  let buffer: number
   let position = Position.Instruction
   return instructions.reduce((acc, code) => {
-    switch (position) {
-      default:
-        return acc
+    if (op !== OpCode.Halt) {
+      switch (position) {
+        case Position.Instruction:
+          op = toInstruction(code)
+          break
+        case Position.One:
+          buffer = acc[code]
+          break
+        case Position.Two:
+          buffer = apply(op, buffer, acc[code])
+          break
+        case Position.Three:
+          acc[code] = buffer
+      }
     }
+
+    position = cycle(position)
+    return acc
   }, instructions)
 }
