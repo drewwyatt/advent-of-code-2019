@@ -1,4 +1,6 @@
 import { intCode } from './part-1'
+import { findNounAndVerbFor } from './part-2'
+import { getInputs } from './util'
 
 describe('day-2', () => {
   describe('part-1', () => {
@@ -20,5 +22,15 @@ describe('day-2', () => {
         0,
         99,
       ]))
+  })
+
+  describe('part-2', () => {
+    let input: number[]
+    beforeAll(async () => {
+      input = await getInputs()
+    })
+
+    it('finds the inputs for part-1', () =>
+      expect(findNounAndVerbFor(input, 6087827)).toEqual([12, 2]))
   })
 })
