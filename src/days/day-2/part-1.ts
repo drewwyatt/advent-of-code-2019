@@ -52,6 +52,9 @@
  * Once you have a working computer, the first step is to restore the gravity assist program (your puzzle input) to the "1202 program alarm" state it had just before the last computer caught fire. To do this, before running the program, replace position 1 with the value 12 and replace position 2 with the value 2. What value is left at position 0 after the program halts?
  */
 
+import getInputs from '../../utils/get-inputs'
+import { toParsedInputs } from './util'
+
 export enum OpCode {
   None = -1,
   Add = 1,
@@ -96,7 +99,7 @@ const cycle = (position: Position) => {
 
 export const intCode = (instructions: number[]) => {
   let op = OpCode.None
-  let buffer: number
+  let buffer = 0
   let position = Position.Instruction
   return instructions.reduce((acc, code) => {
     if (op !== OpCode.Halt) {
@@ -119,3 +122,8 @@ export const intCode = (instructions: number[]) => {
     return acc
   }, instructions)
 }
+
+const solution = async () =>
+  intCode(await getInputs('day-2/inputs.txt', toParsedInputs))[0]
+
+export default solution
