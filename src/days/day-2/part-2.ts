@@ -21,6 +21,7 @@
  */
 
 import { intCode } from './part-1'
+import { getInputs } from './util'
 
 const toInstructions = (input: number[], noun: number, verb: number) => {
   const clone = [...input]
@@ -46,3 +47,11 @@ export const findNounAndVerbFor = (input: number[], expectedOutput: number) => {
 
   return returnVals
 }
+
+const solution = async () => {
+  const input = await getInputs()
+  const [noun, verb] = findNounAndVerbFor(input, 19690720)
+  return 100 * noun + verb
+}
+
+export default solution
