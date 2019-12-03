@@ -46,6 +46,8 @@
  *
  **/
 
+import { getInputs } from './utils'
+
 enum Direction {
   Up = 'U',
   Right = 'R',
@@ -145,3 +147,6 @@ export const distanceToClosestIntersection = (...moves: string[][]) => {
     return sum < acc ? sum : acc
   }, intersections[0]![0]! + intersections[0]![1])
 }
+
+const solution = async () => distanceToClosestIntersection(...(await getInputs()))
+export default solution
