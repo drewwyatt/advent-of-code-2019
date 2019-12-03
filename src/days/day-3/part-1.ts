@@ -143,9 +143,9 @@ export const distanceToClosestIntersection = (...moves: string[][]) => {
   }
 
   return intersections.reduce<number>((acc, [a, b]) => {
-    const sum = a + b
+    const sum = Math.abs(a) + Math.abs(b)
     return sum < acc ? sum : acc
-  }, intersections[0]![0]! + intersections[0]![1])
+  }, Math.abs(intersections[0]![0]!) + Math.abs(intersections[0]![1]))
 }
 
 const solution = async () => distanceToClosestIntersection(...(await getInputs()))
