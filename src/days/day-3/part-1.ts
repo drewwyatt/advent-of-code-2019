@@ -46,5 +46,102 @@
  *
  **/
 
-export const distanceToClosestIntersection = (aMoves: string[], bMoves: string[]) =>
-  aMoves.length + bMoves.length
+enum Direction {
+  Up = 'U',
+  Right = 'R',
+  Down = 'D',
+  Left = 'L',
+}
+
+const DIRECTIONS = Object.values(Direction)
+
+const isDirection = (str: any): str is Direction => DIRECTIONS.includes(str)
+const isXAxis = (direction: Direction): direction is Direction.Left | Direction.Right =>
+  [Direction.Left, Direction.Right].includes(direction)
+
+const toInstruction = (move: string) => {
+  const dir = move.charAt(0)
+  const dis = Number.parseInt(move.slice(1))
+  if (!isDirection(dir) || Number.isNaN(dis)) {
+    throw Error(`Invalid instruction "${move}"`)
+  }
+
+  return [dir, dis] as const
+}
+
+const apply = (dir: Direction, i: number) => {
+  switch (dir) {
+    case Direction.Up:
+    case Direction.Right:
+      return i + 1
+    case Direction.Down:
+    case Direction.Left:
+      return i - 1
+  }
+}
+
+const safelySetPosition = (acc: number[][], x: number, y: number) => {
+  if (!Array.isArray(acc[y])) {
+    acc[y] = []
+  }
+
+  acc[y][x] = 1
+  return acc
+}
+
+const getValyeForCoords = (acc: number[][], x: number, y: number) =>
+  Array.isArray(acc[y]) ? acc[y][x] : undefined
+
+export const distanceToClosestIntersection = (...moves: string[][]) => {
+  const [aInstructions, bInstructions] = moves.map(i => i.map(toInstruction))
+
+  let x = 0
+  let y = 0
+  const grid = aInstructions.reduce(
+    (acc, [direction, distance]) => {
+      for (let i = distance; i > 0; i--) {
+        if (isXAxis(direction)) {
+          y = apply(direction, y)
+        } else {
+          x = apply(direction, x)
+        }
+
+        safelySetPosition(acc, x, y)
+      }
+
+      return acc
+    },
+    [[1]],
+  )
+
+  x = 0
+  y = 0
+  const intersections = bInstructions.reduce<[number, number][]>(
+    (acc, [direction, distance]) => {
+      const intersectionsForPass: [number, number][] = []
+      for (let i = distance; i > 0; i--) {
+        if (isXAxis(direction)) {
+          y = apply(direction, y)
+        } else {
+          x = apply(direction, x)
+        }
+
+        if (getValyeForCoords(grid, x, y) === 1) {
+          intersectionsForPass.push([x, y])
+        }
+      }
+
+      return [...acc, ...intersectionsForPass]
+    },
+    [],
+  )
+
+  if (intersections.length === 0) {
+    throw Error('Could not find intersection')
+  }
+
+  return intersections.reduce<number>((acc, [a, b]) => {
+    const sum = a + b
+    return sum < acc ? sum : acc
+  }, intersections[0]![0]! + intersections[0]![1])
+}
