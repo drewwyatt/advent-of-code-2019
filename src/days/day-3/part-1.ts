@@ -91,7 +91,7 @@ const safelySetPosition = (acc: number[][], x: number, y: number) => {
   return acc
 }
 
-const getValyeForCoords = (acc: number[][], x: number, y: number) =>
+const getValueForCoords = (acc: number[][], x: number, y: number) =>
   Array.isArray(acc[y]) ? acc[y][x] : undefined
 
 export const distanceToClosestIntersection = (...moves: string[][]) => {
@@ -128,7 +128,7 @@ export const distanceToClosestIntersection = (...moves: string[][]) => {
           x = apply(direction, x)
         }
 
-        if (getValyeForCoords(grid, x, y) === 1) {
+        if (getValueForCoords(grid, x, y) === 1) {
           intersectionsForPass.push([x, y])
         }
       }
