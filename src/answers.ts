@@ -9,7 +9,11 @@ const getAnswers = async () => {
   )
   answers.forEach((answers, idx) => {
     console.log(`📅 ${prettyPrint.day(days[idx])}:`)
-    answers.forEach((a, i) => console.log(`  [Part ${i + 1}]: ${a}`))
+    if (answers.length) {
+      answers.forEach((a, i) => console.log(`  [Part ${i + 1}]: ${a}`))
+    } else {
+      console.log('  (No Solutions)')
+    }
   })
 }
 
