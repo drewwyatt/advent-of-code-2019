@@ -20,4 +20,29 @@
  * Find the input noun and verb that cause the program to produce the output 19690720. What is 100 * noun + verb? (For example, if noun=12 and verb=2, the answer would be 1202.)
  */
 
-export const findNounAndVerbFor = (input: number[], expectedOutput: number) => [1, 2]
+import { intCode } from './part-1'
+
+const toInstructions = (input: number[], noun: number, verb: number) => {
+  const clone = [...input]
+  clone[1] = noun
+  clone[2] = verb
+  return clone
+}
+
+export const findNounAndVerbFor = (input: number[], expectedOutput: number) => {
+  let returnVals: [number, number]
+  for (let verb = 0; verb <= 99; verb++) {
+    if (returnVals) {
+      break
+    }
+
+    for (let noun = 0; noun <= 99; noun++) {
+      if (intCode(toInstructions(input, noun, verb))[0] === expectedOutput) {
+        returnVals = [noun, verb]
+        break
+      }
+    }
+  }
+
+  return returnVals
+}
