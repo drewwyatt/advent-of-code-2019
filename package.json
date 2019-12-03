@@ -5,6 +5,8 @@
   "license": "MIT",
   "author": "Drew Wyatt, <drew.j.wyatt@gmail.com>",
   "scripts": {
+    "start": "node dist/answers.js",
+    "build": "tsc",
     "dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/answers.ts",
     "test": "jest"
   },

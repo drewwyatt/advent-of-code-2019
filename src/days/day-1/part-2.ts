@@ -32,7 +32,7 @@ export const calculateRequiredFuelConsideringFuel = (mass: number) => {
 }
 
 const solution = async () => {
-  const inputs = await getInputs('day-1/inputs.txt', toParsedInputs)
+  const inputs = await getInputs('day-1.txt', toParsedInputs)
   return inputs.map(calculateRequiredFuelConsideringFuel).reduce(add)
 }
 

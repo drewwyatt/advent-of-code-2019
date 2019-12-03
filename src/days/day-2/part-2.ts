@@ -31,21 +31,15 @@ const toInstructions = (input: number[], noun: number, verb: number) => {
 }
 
 export const findNounAndVerbFor = (input: number[], expectedOutput: number) => {
-  let returnVals: [number, number]
   for (let verb = 0; verb <= 99; verb++) {
-    if (returnVals) {
-      break
-    }
-
     for (let noun = 0; noun <= 99; noun++) {
       if (intCode(toInstructions(input, noun, verb))[0] === expectedOutput) {
-        returnVals = [noun, verb]
-        break
+        return [noun, verb]
       }
     }
   }
 
-  return returnVals
+  throw Error(`Could not find noun/verb for expected output of "${expectedOutput}"`)
 }
 
 const solution = async () => {

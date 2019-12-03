@@ -30,7 +30,7 @@ const add = (a: number, b: number) => a + b
 export const calculateRequiredFuel = (mass: number) => Math.floor(mass / 3) - 2
 
 const solution = async () => {
-  const inputs = await getInputs('day-1/inputs.txt', toParsedInputs)
+  const inputs = await getInputs('day-1.txt', toParsedInputs)
   return inputs.map(calculateRequiredFuel).reduce(add)
 }
 

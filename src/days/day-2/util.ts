@@ -6,4 +6,4 @@ const toParsedInputs = (rawInputs: string) =>
     .map(i => Number.parseInt(i.trim()))
     .filter(Number.isInteger)
 
-export const getInputs = async () => getRawInputs('day-2/inputs.txt', toParsedInputs)
+export const getInputs = async () => getRawInputs('day-2.txt', toParsedInputs)
