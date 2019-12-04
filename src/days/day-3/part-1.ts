@@ -46,7 +46,7 @@
  *
  **/
 
-import { intersection } from 'ramda'
+import { intersection, map } from 'ramda'
 import { getInputs } from './utils'
 
 enum Direction {
@@ -56,7 +56,7 @@ enum Direction {
   Left = 'L',
 }
 
-type Coords = [number, number]
+export type Coords = [number, number]
 
 const DIRECTIONS = Object.values(Direction)
 
@@ -64,7 +64,7 @@ const isDirection = (str: any): str is Direction => DIRECTIONS.includes(str)
 const isXAxis = (direction: Direction): direction is Direction.Left | Direction.Right =>
   [Direction.Left, Direction.Right].includes(direction)
 
-const toInstruction = (move: string) => {
+export const toInstruction = (move: string) => {
   const dir = move.charAt(0)
   const dis = Number.parseInt(move.slice(1))
   if (!isDirection(dir) || Number.isNaN(dis)) {
@@ -87,7 +87,7 @@ const apply = (dir: Direction, i: number) => {
   }
 }
 
-const plotInstructions = (instructions: Instruction[]) => {
+export const plotInstructions = (instructions: Instruction[]) => {
   let x = 0
   let y = 0
   return instructions.reduce((acc, [direction, distance]) => {
@@ -106,7 +106,7 @@ const plotInstructions = (instructions: Instruction[]) => {
 }
 
 export const distanceToClosestIntersection = (...moves: [string[], string[]]) => {
-  const [a, b] = moves.map(i => i.map(toInstruction)).map(plotInstructions)
+  const [a, b] = moves.map(map(toInstruction)).map(plotInstructions)
   const intersections = intersection(a, b)
   if (intersections.length === 0) {
     throw Error('Could not find intersection')
