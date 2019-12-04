@@ -98,11 +98,11 @@ export const plotInstructions = (instructions: Instruction[]) => {
         x = apply(direction, x)
       }
 
-      acc.push([x, y])
+      acc.push(`${x},${y}`)
     }
 
     return acc
-  }, [] as Coords[])
+  }, [] as string[])
 }
 
 export const distanceToClosestIntersection = (...moves: [string[], string[]]) => {
@@ -112,10 +112,11 @@ export const distanceToClosestIntersection = (...moves: [string[], string[]]) =>
     throw Error('Could not find intersection')
   }
 
-  return intersections.reduce<number>((acc, [a, b]) => {
+  return intersections.reduce<number>((acc, str) => {
+    const [a, b] = str.split(',').map(n => Number.parseInt(n.trim()))
     const sum = Math.abs(a) + Math.abs(b)
     return sum < acc ? sum : acc
-  }, Math.abs(intersections[0]![0]!) + Math.abs(intersections[0]![1]))
+  }, Infinity)
 }
 
 const solution = async () => distanceToClosestIntersection(...(await getInputs()))

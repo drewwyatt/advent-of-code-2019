@@ -31,22 +31,18 @@
  *
  * What is the fewest combined steps the wires must take to reach an intersection?
  */
-import { equals, findIndex, intersection, map, min } from 'ramda'
-import { Coords, plotInstructions, toInstruction } from './part-1'
+import { indexOf, intersection, map, min } from 'ramda'
+import { plotInstructions, toInstruction } from './part-1'
 import { getInputs } from './utils'
 
-const distanceToIntersectionFor = (a: Coords[], b: Coords[]) => (c: Coords) =>
-  findIndex(equals(c), a) + findIndex(equals(c), b) + 2 // add 2 to compensate for indexes starting at zero
+const distanceToIntersectionFor = (a: string[], b: string[]) => (c: string) =>
+  indexOf(c, a) + indexOf(c, b) + 2 // add 2 to compensate for indexes starting at zero
 
 export const fewestCombinedStepsFor = (...inputs: [string[], string[]]) => {
-  console.log('plotting instructions...')
   const [a, b] = inputs.map(map(toInstruction)).map(plotInstructions)
-  console.log('intersecting...')
-  const val = intersection(a, b)
+  return intersection(a, b)
     .map(distanceToIntersectionFor(a, b))
     .reduce(min, Infinity)
-  console.log('returning...')
-  return val
 }
 
 const solution = async () => fewestCombinedStepsFor(...(await getInputs()))
