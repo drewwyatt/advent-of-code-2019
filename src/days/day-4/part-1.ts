@@ -21,7 +21,7 @@
  * Your puzzle input is 248345-746315.
  */
 
-import { allPass, ascend, compose, either, equals, identity, sort } from 'ramda'
+import { allPass, ascend, compose, either, equals, identity, range, sort } from 'ramda'
 
 type Validator = (n: string[]) => boolean
 
@@ -38,3 +38,6 @@ const validators = [hasDuplicateNeighbor, isAscendingOrder]
 const toDigits = (n: number) => n.toString().split('')
 
 export const isPasswordCandidate = compose(allPass(validators), toDigits)
+
+const solution = async () => range(248345, 746315).filter(isPasswordCandidate).length
+export default solution
