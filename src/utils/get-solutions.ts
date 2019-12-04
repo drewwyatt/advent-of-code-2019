@@ -25,7 +25,7 @@ const getDays = async (): Promise<SolutionMap> => {
       /* */
     }
 
-    return [part1, part2]
+    return [part1 ?? null, part2 ?? null]
   })
 
   return (await Promise.all(promises)).reduce(
