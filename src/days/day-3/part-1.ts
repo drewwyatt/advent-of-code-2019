@@ -46,6 +46,7 @@
  *
  **/
 
+import { intersection } from 'ramda'
 import { getInputs } from './utils'
 
 enum Direction {
@@ -54,6 +55,8 @@ enum Direction {
   Down = 'D',
   Left = 'L',
 }
+
+type Coords = [number, number]
 
 const DIRECTIONS = Object.values(Direction)
 
@@ -71,6 +74,8 @@ const toInstruction = (move: string) => {
   return [dir, dis] as const
 }
 
+type Instruction = ReturnType<typeof toInstruction>
+
 const apply = (dir: Direction, i: number) => {
   switch (dir) {
     case Direction.Up:
@@ -82,62 +87,27 @@ const apply = (dir: Direction, i: number) => {
   }
 }
 
-const safelySetPosition = (acc: number[][], x: number, y: number) => {
-  if (!Array.isArray(acc[y])) {
-    acc[y] = []
-  }
-
-  acc[y][x] = 1
-  return acc
-}
-
-const getValueForCoords = (acc: number[][], x: number, y: number) =>
-  Array.isArray(acc[y]) ? acc[y][x] : undefined
-
-export const distanceToClosestIntersection = (...moves: string[][]) => {
-  const [aInstructions, bInstructions] = moves.map(i => i.map(toInstruction))
-
+const plotInstructions = (instructions: Instruction[]) => {
   let x = 0
   let y = 0
-  const grid = aInstructions.reduce(
-    (acc, [direction, distance]) => {
-      for (let i = distance; i > 0; i--) {
-        if (isXAxis(direction)) {
-          y = apply(direction, y)
-        } else {
-          x = apply(direction, x)
-        }
-
-        safelySetPosition(acc, x, y)
+  return instructions.reduce((acc, [direction, distance]) => {
+    for (let i = distance; i > 0; i--) {
+      if (isXAxis(direction)) {
+        y = apply(direction, y)
+      } else {
+        x = apply(direction, x)
       }
 
-      return acc
-    },
-    [[1]],
-  )
+      acc.push([x, y])
+    }
 
-  x = 0
-  y = 0
-  const intersections = bInstructions.reduce<[number, number][]>(
-    (acc, [direction, distance]) => {
-      const intersectionsForPass: [number, number][] = []
-      for (let i = distance; i > 0; i--) {
-        if (isXAxis(direction)) {
-          y = apply(direction, y)
-        } else {
-          x = apply(direction, x)
-        }
+    return acc
+  }, [] as Coords[])
+}
 
-        if (getValueForCoords(grid, x, y) === 1) {
-          intersectionsForPass.push([x, y])
-        }
-      }
-
-      return [...acc, ...intersectionsForPass]
-    },
-    [],
-  )
-
+export const distanceToClosestIntersection = (...moves: [string[], string[]]) => {
+  const [a, b] = moves.map(i => i.map(toInstruction)).map(plotInstructions)
+  const intersections = intersection(a, b)
   if (intersections.length === 0) {
     throw Error('Could not find intersection')
   }

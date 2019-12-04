@@ -11,11 +11,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "ramda": "^0.26.1",
     "typescript": "^3.7.2"
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
     "@types/node": "^12.12.14",
+    "@types/ramda": "^0.26.36",
     "jest": "^24.9.0",
     "nodemon": "^2.0.1",
     "prettier": "^1.19.1",

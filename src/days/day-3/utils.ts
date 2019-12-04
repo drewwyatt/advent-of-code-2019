@@ -9,6 +9,6 @@ const toParsedInputs = (rawInputs: string) =>
         .map(j => j.trim())
         .filter(Boolean),
     )
-    .filter(Boolean)
+    .filter(Boolean) as [string[], string[]]
 
 export const getInputs = async () => getRawInputs('day-3.txt', toParsedInputs)
