@@ -33,13 +33,21 @@
  */
 import { equals, findIndex, intersection, map, min } from 'ramda'
 import { Coords, plotInstructions, toInstruction } from './part-1'
+import { getInputs } from './utils'
 
 const distanceToIntersectionFor = (a: Coords[], b: Coords[]) => (c: Coords) =>
   findIndex(equals(c), a) + findIndex(equals(c), b) + 2 // add 2 to compensate for indexes starting at zero
 
 export const fewestCombinedStepsFor = (...inputs: [string[], string[]]) => {
+  console.log('plotting instructions...')
   const [a, b] = inputs.map(map(toInstruction)).map(plotInstructions)
-  return intersection(a, b)
+  console.log('intersecting...')
+  const val = intersection(a, b)
     .map(distanceToIntersectionFor(a, b))
     .reduce(min, Infinity)
+  console.log('returning...')
+  return val
 }
+
+const solution = async () => fewestCombinedStepsFor(...(await getInputs()))
+export default solution
