@@ -1,8 +1,8 @@
-import { isPasswordCandidate } from './part-1'
+import { isValidForPart1 } from './part-1'
 
 describe('day-4', () => {
   const candidacyOf = (n: number, shouldPass: boolean) => () =>
-    expect(isPasswordCandidate(n)).toEqual(shouldPass)
+    expect(isValidForPart1(n)).toEqual(shouldPass)
 
   describe('part-1', () => {
     test(
