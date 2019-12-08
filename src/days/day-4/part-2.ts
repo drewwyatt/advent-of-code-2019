@@ -11,7 +11,7 @@
  * How many different passwords within the range given in your puzzle input meet all of the criteria?
  */
 
-// import { range } from 'ramda'
+import { range } from 'ramda'
 import { toIsValid } from './shared'
 import { hasExactlyOneDuplicateNeighbor, isAscendingOrder } from './validators'
 
@@ -20,5 +20,5 @@ export const isValidForPart2 = toIsValid([
   isAscendingOrder,
 ])
 
-// const solution = async () => range(248345, 746315).filter(isValidForPart1).length
-// export default solution
+const solution = async () => range(248345, 746315).filter(isValidForPart2).length
+export default solution
